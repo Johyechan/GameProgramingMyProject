@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerManager : MonoBehaviour
 {
+    private event Action DieEventAction;
+
     private PlayerMovement _movement;
 
     private Rigidbody2D _rigid2D;
@@ -12,6 +15,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
+        DieEventAction += SceneChangeManager.Instance.DieEvent;
         _movement = GetComponent<PlayerMovement>();
         _rigid2D = GetComponent<Rigidbody2D>();
     }
@@ -24,14 +28,15 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "StartFloor")
+        if(collision.gameObject.CompareTag("StartFloor"))
         {
             _rigid2D.AddForce(Vector2.up * GameManager.Instance.JumpCalculator(_jumpPower));
             _jumpPower += 5;
+            ScoreManager.Instance.IncreaseScore();
         }
         else
         {
-            // ªÁ∏¡ æ¿¿∏∑Œ
+            DieEventAction?.Invoke();
         }
     }
 }

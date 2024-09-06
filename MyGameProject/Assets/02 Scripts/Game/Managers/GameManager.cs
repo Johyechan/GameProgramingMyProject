@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    public GameObject Player
+    {
+        get
+        {
+            if(_player == null)
+            {
+                _player = GameObject.Find("Player");
+            }
+            return _player;
+        }
+    }
+
     private GameObject _player;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
-
         _player = GameObject.Find("Player");
     }
 
@@ -22,13 +33,13 @@ public class GameManager : Singleton<GameManager>
     {
         Vector3 pos = Camera.main.WorldToViewportPoint(_player.transform.position);
 
-        if(pos.x > 1)
+        if(pos.x > 0.95f)
         {
-            pos.x = 1f;
+            pos.x = 0.95f;
         }
-        if(pos.x < 0)
+        if(pos.x < 0.05f)
         {
-            pos.x = 0f;
+            pos.x = 0.05f;
         }
 
         _player.transform.position = Camera.main.ViewportToWorldPoint(pos);
