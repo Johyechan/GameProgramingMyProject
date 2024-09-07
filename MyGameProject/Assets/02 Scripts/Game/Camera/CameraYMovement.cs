@@ -15,7 +15,7 @@ public class CameraYMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(_player.transform.position.y > 4.5f)
+        if(_player.transform.position.y > 0f)
         {
             Vector3 newPos = new (0, _player.transform.position.y, -10);
 

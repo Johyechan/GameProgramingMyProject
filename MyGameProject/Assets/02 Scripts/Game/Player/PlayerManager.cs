@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     private Rigidbody2D _rigid2D;
 
     [SerializeField] private float _jumpPower;
+    [SerializeField] private float _jumpPowerIncrease;
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class PlayerManager : MonoBehaviour
         if(collision.gameObject.CompareTag("StartFloor"))
         {
             _rigid2D.AddForce(Vector2.up * GameManager.Instance.JumpCalculator(_jumpPower));
-            _jumpPower += 5;
+            _jumpPower += _jumpPowerIncrease;
             ScoreManager.Instance.IncreaseScore();
         }
         else
